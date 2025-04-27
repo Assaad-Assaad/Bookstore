@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Bookstore.ViewModels"
+             x:Class="Bookstore.Views.OrdersPage"
+             Title="Orders"
+             x:DataType="viewmodel:OrdersViewModel">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+
+        <!-- Orders List -->
+        <CollectionView ItemsSource="{Binding Orders}" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" CornerRadius="10" BackgroundColor="White" Margin="5">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <!-- Order Info -->
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="Order ID: {Binding Id}" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="Date: {Binding OrderDate, StringFormat='{0:dd MMM yyyy}'}" FontSize="14"/>
+                                <Label Text="Status: {Binding Status}" FontSize="14" TextColor="Blue"/>
+                            </VerticalStackLayout>
+
+                            <!-- Complete Order Button -->
+                            <Button Text="Complete" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrdersViewModel}}, Path=CompleteOrderCommand}" 
+                                    CommandParameter="{Binding .}" 
+                                    BackgroundColor="Green" 
+                                    TextColor="White"
+                                    Grid.Column="1"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Empty Order Message -->
+        <Label Text="No orders available." 
+               IsVisible="{Binding Orders.Count, Converter={StaticResource InverseBool}}" 
+               FontSize="18" 
+               HorizontalOptions="Center" 
+               TextColor="#666"/>
+    </VerticalStackLayout>
+</ContentPage>

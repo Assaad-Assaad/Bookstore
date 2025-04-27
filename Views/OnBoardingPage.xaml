@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bookstore.Views.OnBoardingPage"
+             Title="Welcome">
+
+    <Grid RowDefinitions="*, Auto">
+        <Grid RowDefinitions="2*, 3*">
+            <Border Grid.Row="0"
+            StrokeShape="RoundRectangle 150"
+            HeightRequest="250"
+            WidthRequest="250"
+            Stroke="{StaticResource Primary}"
+            StrokeThickness="10">
+                <Image Source="book_shop.png"
+                       Aspect="AspectFill"
+                       HeightRequest="250"
+                       WidthRequest="250"/>
+            </Border>
+
+            <VerticalStackLayout Grid.Row="1"
+                             Padding="20"
+                             Spacing="20">
+            <Label Text="Find your favorite book"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"/>
+
+            <Label HorizontalTextAlignment="Center"
+                   Text="Explore a wide collection of books."
+                   FontSize="16"
+                   LineHeight="1.3"/>
+
+            <Button Grid.Row="1"
+                    Clicked="Button_Clicked"
+                    Text="Explore"
+                    Style="{StaticResource btnPrimary}"/>
+            </VerticalStackLayout>
+        </Grid>
+  </Grid>
+
+</ContentPage>

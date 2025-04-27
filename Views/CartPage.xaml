@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Bookstore.ViewModels"
+             x:Class="Bookstore.Views.CartPage"
+             Title="Your Cart"
+             x:DataType="viewmodel:CartViewModel">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <!-- Cart Items List -->
+        <CollectionView ItemsSource="{Binding CartItems}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" CornerRadius="10" BackgroundColor="White" Margin="5">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+
+                            <!-- Book Image -->
+                            <Image Source="{Binding Book.PhotoUrl}" 
+                                   HeightRequest="80" WidthRequest="60" 
+                                   Grid.Column="0"/>
+
+                            <!-- Book Details -->
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Book.Title}" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="{Binding Book.Price, StringFormat='€{0:F2}'}" FontSize="16" TextColor="Green"/>
+                                <Label Text="Quantity: {Binding Quantity}" FontSize="14"/>
+                            </VerticalStackLayout>
+
+                            <!-- Remove Button -->
+                            <Button Text="Remove" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartViewModel}}, Path=RemoveFromCartCommand}" 
+                                    CommandParameter="{Binding .}" 
+                                    BackgroundColor="Red" 
+                                    TextColor="White" 
+                                    Grid.Column="2"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Empty Cart Message -->
+        <Label Text="Your cart is empty." 
+               IsVisible="{Binding IsCartEmpty}" 
+               FontSize="18" 
+               HorizontalOptions="Center" 
+               TextColor="#666"/>
+
+        <!-- Total Price -->
+        <Label Text="{Binding TotalPrice, StringFormat='Total: €{0:F2}'}" 
+               FontSize="20" 
+               FontAttributes="Bold" 
+               TextColor="Black"
+               HorizontalOptions="Center"/>
+
+        <!-- Complete Order Button -->
+        <Button Text="Complete Order" 
+                Command="{Binding CompleteOrderCommand}" 
+                BackgroundColor="Blue" 
+                TextColor="White" 
+                CornerRadius="10" 
+                FontSize="18"
+                IsVisible="{Binding IsCartNotEmpty}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

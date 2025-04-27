@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Bookstore.ViewModels"
+             xmlns:model="clr-namespace:Bookstore.Models"
+             x:Class="Bookstore.Views.AuthPage"
+             Title="Authentication"
+             x:DataType="viewmodel:AuthViewModel">
+
+    <Grid RowDefinitions="2*, 3*">
+        <!-- Logo -->
+        <Border Grid.Row="0"
+                StrokeShape="RoundRectangle 150"
+                HeightRequest="250"
+                WidthRequest="250"
+                Stroke="{StaticResource Primary}"
+                StrokeThickness="10">
+            <Image Source="books.png"
+                   Aspect="AspectFill"
+                   HeightRequest="250"
+                   WidthRequest="250"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+            <Border.Shadow>
+                <Shadow Brush="{StaticResource Primary}" Radius="250"/>
+            </Border.Shadow>
+        </Border>
+
+        <!-- Login/Register Form -->
+        <ScrollView Grid.Row="1" Padding="15">
+            <VerticalStackLayout Spacing="30">
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Grid.Row="0" 
+                           Text="{Binding IsRegistrationMode, Converter={StaticResource BoolToTextConverter}, ConverterParameter='Register,Login'}"
+                           FontSize="30" 
+                           FontAttributes="Bold" 
+                           LineHeight="1.2"/>
+                    <Label Grid.Column="1"
+                           Text="{Binding IsRegistrationMode, Converter={StaticResource BoolToTextConverter}, ConverterParameter='Switch to Login,Switch to Register'}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="End"
+                           Padding="5"
+                           BackgroundColor="White"
+                           FontAttributes="Bold"
+                           TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleModeCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+                <!-- Registration Fields (Visible only in Registration Mode) -->
+                <VerticalStackLayout Spacing="10" IsVisible="{Binding IsRegistrationMode}">
+                    <Entry Placeholder="Enter full name"
+                           Text="{Binding RegisterModel.FullName}"
+                           PlaceholderColor="{StaticResource Primary}"/>
+                </VerticalStackLayout>
+
+                <!-- Common Fields (Email & Password) -->
+                <Entry Placeholder="Enter email"
+                       Text="{Binding LoginModel.Email, Mode=TwoWay}"
+                       PlaceholderColor="{StaticResource Primary}"
+                       Keyboard="Email"/>
+                <Entry Placeholder="Enter password"
+                       Text="{Binding LoginModel.Password, Mode=TwoWay}"
+                       PlaceholderColor="{StaticResource Primary}"
+                       IsPassword="True"/>
+
+                <!-- Button (Login or Register) -->
+                <Button Text="{Binding IsRegistrationMode, Converter={StaticResource BoolToTextConverter}, ConverterParameter='Register,Login'}"
+                        Command="{Binding SubmitCommand}"
+                        Style="{StaticResource btnPrimary}"/>
+
+                <!-- Skip -->
+                <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="5">
+                    <BoxView Grid.Column="0" 
+                             HeightRequest="1" 
+                             Color="{StaticResource Primary}"/>
+                    <Button Grid.Column="1" 
+                            Text="Skip for now"
+                            HorizontalOptions="Center"
+                            Padding="25, 5"
+                            HeightRequest="30"
+                            Command="{Binding SkipForNowCommand}"/>
+                    <BoxView Grid.Column="2" 
+                             HeightRequest="1" 
+                             Color="{StaticResource Primary}"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        <ActivityIndicator VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           IsRunning="{Binding IsBusy}"
+                           Color="{StaticResource Primary}"
+                           HeightRequest="30"
+                           WidthRequest="30"/>
+    </Grid>
+</ContentPage>

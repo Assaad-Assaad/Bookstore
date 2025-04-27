@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Bookstore.ViewModels"
+             x:Class="Bookstore.Views.BookDetailsPage"
+             Title="Book Details"
+             x:DataType="viewmodel:BookDetailsViewModel">
+
+    <Grid RowDefinitions="Auto, *" Padding="10">
+        <!-- Toolbar with Icons -->
+        <Grid ColumnDefinitions="Auto, *, Auto" Grid.Row="0" Padding="10">
+            
+            
+
+            <Label Text="{Binding Book.Title}" 
+                   FontSize="20" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Column="1"/>
+
+            <!-- Cart Button -->
+            <ImageButton Source="cart.svg"
+                         HeightRequest="30"
+                         WidthRequest="30"
+                         Command="{Binding GoToCartCommand}"
+                         Grid.Column="2"/>
+        </Grid>
+
+        <!-- Book Details Section -->
+        <ScrollView Grid.Row="1" Padding="15">
+            <VerticalStackLayout Spacing="20">
+                
+                <Border Grid.Row="0"
+                        StrokeShape="RoundRectangle 150"
+                        HeightRequest="250"
+                        WidthRequest="250"
+                        Stroke="{StaticResource Primary}"
+                        StrokeThickness="10">
+                    <Image Source="{Binding Book.PhotoUrl}"
+                           Aspect="AspectFit"
+                           HeightRequest="250"
+                           WidthRequest="250"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                    <Border.Shadow>
+                        <Shadow Brush="{StaticResource Primary}" Radius="250"/>
+                    </Border.Shadow>
+                </Border>
+
+                <Label Text="{Binding Book.Author}" 
+                       FontSize="18"
+                       TextColor="Gray"/>
+
+                <Label Text="{Binding Book.Description}"
+                       FontSize="16"/>
+
+                <Label Text="{Binding Book.Price, StringFormat='€{0:F2}'}"
+                       FontSize="18"
+                       TextColor="Green"/>
+
+                <!-- Add to Cart Button -->
+                <Button Text="Add to Cart" 
+                        BackgroundColor="DarkBlue" 
+                        TextColor="White"
+                        FontSize="18"
+                        Command="{Binding AddToCartCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

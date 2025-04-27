@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Shell
+    x:Class="Bookstore.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Bookstore.Views"
+    xmlns:local="clr-namespace:Bookstore"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Shell.FlyoutBehavior="Disabled">
+
+
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}"
+                               StatusBarStyle="LightContent"/>
+    </Shell.Behaviors>
+
+
+    <ShellContent
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False"/>
+
+        <ShellContent
+            ContentTemplate="{DataTemplate views:OnBoardingPage}"
+            Route="OnBoardingPage"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False"/>
+
+        <ShellContent
+            Title=""
+            ContentTemplate="{DataTemplate views:AuthPage}"
+            Route="AuthPage"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False"/>
+
+
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            Icon="homepage"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            Route="HomePage"/>
+        <ShellContent
+            Title="All Books"
+            Icon="list"
+            ContentTemplate="{DataTemplate views:AllBooksPage}"
+            Route="AllBooksPage"/>
+        <ShellContent
+            Title="Cart"
+            Icon="cart"
+            ContentTemplate="{DataTemplate views:CartPage}"
+            Route="CartPage"/>
+        <ShellContent
+            Title="Profile"
+            Icon="user"
+            ContentTemplate="{DataTemplate views:ProfilePage}"
+            Route="ProfilePage"/>
+
+        <ShellContent
+            Title="Orders"
+            Icon="order"
+            ContentTemplate="{DataTemplate views:OrdersPage}"
+            Route="OrdersPage"/>
+
+    </TabBar>
+
+
+
+
+</Shell>
+

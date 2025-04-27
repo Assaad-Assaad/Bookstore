@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Bookstore.ViewModels"
+             xmlns:model="clr-namespace:Bookstore.Models"
+             x:Class="Bookstore.Views.AllBooksPage"
+             Title="All Books"
+             x:DataType="viewmodel:AllBooksViewModel">
+
+    <Grid RowDefinitions="Auto,*" Padding="10">
+
+        <!-- Search Bar -->
+        <Grid Row="0" Padding="0,10,0,10">
+            <SearchBar Placeholder="Search for books..."
+                       Text="{Binding SearchText, Mode=TwoWay}"
+                       BackgroundColor="White"
+                       FontSize="16"
+                       TextColor="Black"
+                       CancelButtonColor="Gray" />
+        </Grid>
+
+        <!-- CollectionView for Books -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Books}"
+                        SelectionMode="None">
+
+
+            <!-- Empty View -->
+            <CollectionView.EmptyView>
+                <StackLayout Padding="50" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image Source="nodata.png" HeightRequest="150" Aspect="AspectFit" />
+                    <Label Text="No books found." FontSize="18" TextColor="#666" HorizontalOptions="Center" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <!-- Item Template -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Book">
+                    <Grid Padding="10" HorizontalOptions="Fill">
+                        <Border HeightRequest="125" Style="{StaticResource CardView}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AllBooksViewModel}}, x:DataType=viewmodel:AllBooksViewModel, Path=GoToDetailsCommand}"
+                                                CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            <Grid Padding="10" ColumnDefinitions="Auto,*,Auto">
+                                <!-- Book Image -->
+                                <Image Source="{Binding PhotoUrl}"
+                                       HeightRequest="100"
+                                       WidthRequest="70"
+                                       Aspect="AspectFill"
+                                       VerticalOptions="Center" />
+
+                                <!-- Book Details -->
+                                <VerticalStackLayout Grid.Column="1" Padding="10,0,10,0">
+                                    <Label Text="{Binding Title}" 
+                                           FontSize="18" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#333" />
+                                    <Label Text="{Binding Author}" 
+                                           FontSize="14" 
+                                           TextColor="#666" />
+                                    <Label Text="{Binding Price, StringFormat='€{0:F2}'}" 
+                                           FontSize="16" 
+                                           TextColor="Green" 
+                                           FontAttributes="Bold" />
+                                </VerticalStackLayout>
+
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

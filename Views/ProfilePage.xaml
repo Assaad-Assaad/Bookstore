@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Bookstore.ViewModels"
+             x:Class="Bookstore.Views.ProfilePage"
+             Title="Profile"
+             Padding="15,25"
+             x:DataType="viewmodel:ProfileViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="Padding" Value="50,5" />
+            <Setter Property="HeightRequest" Value="30" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto" RowSpacing="15">
+        <!-- User Avatar -->
+        <VerticalStackLayout Grid.Row="0" Spacing="5">
+            <Border BackgroundColor="{StaticResource Primary}"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    StrokeShape="RoundRectangle 50"
+                    StrokeThickness="0">
+                <Label Text="{Binding Initials}"
+                       TextColor="White"
+                       FontSize="50"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       TextTransform="Uppercase"
+                       FontAttributes="Bold" />
+            </Border>
+            <Label Text="{Binding FullName}"
+                   HorizontalOptions="Center"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" />
+        </VerticalStackLayout>
+
+        <!-- Profile Information -->
+        <VerticalStackLayout Grid.Row="1" Spacing="10" Padding="15">
+            <Grid RowDefinitions="*, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Your Profile Information"
+                       FontSize="20"
+                       TextColor="{StaticResource Primary}" />
+                <BoxView Grid.Row="1"
+                         Grid.ColumnSpan="2"
+                         HeightRequest="1"
+                         Color="{StaticResource Primary}"
+                         Opacity="0.25" />
+            </Grid>
+            <Grid RowDefinitions="*, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="{Binding Email}"
+                       FontSize="20"
+                       TextColor="{StaticResource Primary}" />
+                <BoxView Grid.Row="1"
+                         Grid.ColumnSpan="1"
+                         Color="{StaticResource Primary}"
+                         Opacity="0.25" />
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- Login/Logout Button -->
+        <Button Grid.Row="2"
+                Style="{StaticResource ButtonStyle}"
+                Command="{Binding LoginLogoutCommand}">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding IsLoggedIn}"
+                             Value="True">
+                    <Setter Property="Text" Value="Logout" />
+                </DataTrigger>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding IsLoggedIn}"
+                             Value="False">
+                    <Setter Property="Text" Value="Login" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="0"
+                           Grid.RowSpan="3"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           Color="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
